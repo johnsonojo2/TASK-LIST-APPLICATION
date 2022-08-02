@@ -60,9 +60,16 @@
 // }
 // let twice = multiplier(2);
 // console.log(twice(5));
-const delItem = (e) => {
-  if (e.target.parentElement.classList.contains("delete-item")) {
-    e.target.parentElement.parentElement.remove();
-  }
-};
-document.body.addEventListener("click", delItem);
+// const delItem = (e) => {
+//   if (e.target.parentElement.classList.contains("delete-item")) {
+//     e.target.parentElement.parentElement.remove();
+//   }
+// };
+// document.body.addEventListener("click", delItem);
+
+// set local storage item
+localStorage.setItem("name", "John");
+localStorage.setItem("school", "UofC");
+
+const mySchool = localStorage.getItem("school");
+console.log(mySchool);
