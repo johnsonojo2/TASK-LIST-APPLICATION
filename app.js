@@ -68,8 +68,80 @@
 // document.body.addEventListener("click", delItem);
 
 // set local storage item
-localStorage.setItem("name", "John");
-localStorage.setItem("school", "UofC");
+// localStorage.setItem("name", "John");
+// localStorage.setItem("school", "UofC");
 
-const mySchool = localStorage.getItem("school");
-console.log(mySchool);
+// const mySchool = localStorage.getItem("school");
+// console.log(mySchool);
+
+// document.querySelector("form").addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   const task = document.querySelector("#task").value;
+//   let tasks;
+//   if (localStorage.getItem("tasks") === null) {
+//     tasks = [];
+//   } else {
+//     tasks = JSON.parse(localStorage.getItem("tasks"));
+//   }
+//   tasks.push(task);
+//   localStorage.setItem("tasks", JSON.stringify(tasks));
+
+//   e.preventDefault();
+// });
+//UI VARIABLES
+const form = document.querySelector("#task-form");
+const taskList = document.querySelector(".collection");
+const clearBtn = document.querySelector(".clear-tasks");
+const filter = document.querySelector("#filter");
+const taskInput = document.querySelector("#task");
+
+//to load all event listeners
+loadEventListeners();
+
+//to load all event listeners
+function loadEventListeners() {
+  //Add task event
+  form.addEventListener("submit", addTask);
+}
+
+function addTask(e) {
+  if (taskInput.value === "") {
+    alert("add a task");
+  }
+
+  //   } elseif(taskIput.value in ){
+  //     alert("add a task");
+  // };
+  else {
+    //create li element
+    const li = document.createElement("li");
+
+    //add class
+    li.className = "collection-item";
+    //append task value to li
+    li.append(taskInput.value);
+    // creating task node and appending to li (another method to test)
+    // li.appendChild(document.createTextNode(taskInput.value))
+
+    // create a new link for the delete icon
+    const link = document.createElement("a");
+
+    //add class
+    link.className = "delete-item secondary-content";
+
+    //add icon html
+    link.innerHTML = '<i class="fa fa-remove"></i>';
+
+    // append to li
+    li.append(link);
+
+    // append li to ul
+    taskList.append(li);
+
+    // clearing out taskInput
+    taskInput.value = "";
+  }
+
+  //prvent default form action
+  e.preventDefault();
+}
