@@ -100,10 +100,15 @@ loadEventListeners();
 
 //to load all event listeners
 function loadEventListeners() {
-  //Add task event
+  //Add tasks event
   form.addEventListener("submit", addTask);
-}
+  //Remove tasks event
+  taskList.addEventListener("click", removeTask);
 
+  //Clear tasks event
+  clearBtn.addEventListener("click", clearTask);
+}
+// Add task Function
 function addTask(e) {
   if (taskInput.value === "") {
     alert("add a task");
@@ -145,3 +150,26 @@ function addTask(e) {
   //prvent default form action
   e.preventDefault();
 }
+//Remove Task Function
+function removeTask(e) {
+  if (e.target.classList.contains("fa")) {
+    if (confirm("are you sure?")) {
+      e.target.parentElement.parentElement.remove();
+    }
+  }
+
+  console.log(e.target.parentElement.parentElement);
+}
+
+//Clear Task Function
+function clearTask() {
+  //   taskList.innerHTML = "";
+
+  //faster method
+
+  while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild);
+  }
+}
+
+//Filter Tasks Function
