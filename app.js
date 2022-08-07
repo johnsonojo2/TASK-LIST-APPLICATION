@@ -122,6 +122,7 @@ function addTask(e) {
   // };
   else {
     //create li element
+    e.preventDefault();
     const li = document.createElement("li");
 
     //add class
@@ -146,12 +147,26 @@ function addTask(e) {
     // append li to ul
     taskList.append(li);
 
+    // Store Task in Local Storage
+    storeTaskInLocalStorage(taskInput.value);
+
     // clearing out taskInput
     taskInput.value = "";
   }
 
   //prvent default form action
   e.preventDefault();
+}
+// Store Task
+function storeTaskInLocalStorage(task) {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+  tasks.push(task);
+  localStorage.setItem("tasks", JSON.stringify("tasks"));
 }
 //Remove Task Function
 function removeTask(e) {
