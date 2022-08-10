@@ -101,7 +101,7 @@ loadEventListeners();
 //to load all event listeners
 function loadEventListeners() {
   //   Dom Load event
-  //   document.addEventListener("DOMContentLoaded", getTasks);
+  document.addEventListener("DOMContentLoaded", getTasks);
   //Add tasks event
   form.addEventListener("submit", addTask);
   //Remove tasks event
@@ -115,45 +115,55 @@ function loadEventListeners() {
 }
 // Get Tasks form Local storage
 
-// function getTasks() {
-//   let tasks;
-//   if (localStorage.getItem("tasks") === null) {
-//     tasks = [];
-//   } else {
-//     tasks = JSON.parse(localStorage.getItem(tasks));
-//   }
+function getTasks() {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
 
-//   tasks.forEach(function (task) {
-//     //create li element
+  tasks.forEach(function (task) {
+    //create li element
 
-//     const li = document.createElement("li");
+    const li = document.createElement("li");
 
-//     //add class
-//     li.className = "collection-item";
-//     //append task value to li
-//     li.append(task);
-//     // creating task node and appending to li (another method to test)
-//     // li.appendChild(document.createTextNode(taskInput.value))
+    //add class
+    li.className = "collection-item";
+    //append task value to li
+    li.append(task);
+    // creating task node and appending to li (another method to test)
+    // li.appendChild(document.createTextNode(taskInput.value))
 
-//     // create a new link for the delete icon
-//     const link = document.createElement("a");
+    // create a new link for the delete icon
+    const link = document.createElement("a");
 
-//     //add class
-//     link.className = "delete-item secondary-content";
+    //add class
+    link.className = "delete-item secondary-content";
 
-//     //add icon html
-//     link.innerHTML = '<i class="fa fa-remove"></i>';
+    //add icon html
+    link.innerHTML = '<i class="fa fa-remove"></i>';
 
-//     // append to li
-//     li.append(link);
+    // append to li
+    li.append(link);
 
-//     // append li to ul
-//     taskList.append(li);
-//   });
-// }
+    // append li to ul
+    taskList.append(li);
+  });
+}
 // Add task Function
 function addTask(e) {
-  e.preventDefault();
+  // document.querySelectorAll(".collection-item").forEach((task) => {
+  //     const item = task.firstChild.textContent;
+  //     if (item.toLowerCase().indexOf(text) != -1) {
+  //       task.style.display = "block";
+  //     } else {
+  //       task.style.display = "none";
+  //     }
+  //   }
+  //   document.querySelectorAll(".collection-item").forEach((task) => {
+  //     const item = task.firstChild.textContent;
+  //   });
   if (taskInput.value === "") {
     alert("add a task");
   }
@@ -163,6 +173,11 @@ function addTask(e) {
   // };
   else {
     //create li element
+    // for (let i = 0; i < taskList.children; i++) {
+    //   if (taskInput.value === taskList.children[i].textContent) {
+    //     alert("task already exists");
+    //   }
+    // }
 
     const li = document.createElement("li");
 
@@ -186,6 +201,7 @@ function addTask(e) {
     li.append(link);
 
     // append li to ul
+
     taskList.append(li);
 
     // Store Task in Local Storage
@@ -214,12 +230,30 @@ function removeTask(e) {
   if (e.target.classList.contains("fa")) {
     if (confirm("are you sure?")) {
       e.target.parentElement.parentElement.remove();
+
+      // remove from local Storage
     }
+    removeFromLocalStorage(e.target.parentElement.parentElement);
   }
 
   console.log(e.target.parentElement.parentElement);
 }
+//Remove from LS
+function removeFromLocalStorage(taskItem) {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+  tasks.forEach(function (task, index) {
+    if (taskItem.textContent === task) {
+      tasks.splice(index, 1);
+    }
+  });
 
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 //Clear Task Function
 function clearTask() {
   //   taskList.innerHTML = "";
@@ -229,6 +263,14 @@ function clearTask() {
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
+
+  //clear Tasks from Local storage
+
+  clearTasksFromLocalStorage();
+}
+//Clear Task Function from local storage
+function clearTasksFromLocalStorage() {
+  localStorage.clear();
 }
 
 //Filter Tasks Function
