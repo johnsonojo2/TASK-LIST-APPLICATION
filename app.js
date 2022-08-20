@@ -154,19 +154,21 @@ function getTasks() {
 
 // Add task Function
 function addTask(e) {
-  e.preventDefault();
-
   if (taskInput.value === "") {
     alert("add a task");
   } else {
-    if (taskList.children.length === 0) {
+    presentTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (presentTasks.includes(taskInput.value.toLowerCase())) {
+      alert("tasks already exists");
+    } else {
       const li = document.createElement("li");
 
       //add class
       li.className = "collection-item";
+
       //append task value to li
       li.append(taskInput.value);
-      // creating task node and appending to li (another method to test)
+
       // li.appendChild(document.createTextNode(taskInput.value))
 
       // create a new link for the delete icon
@@ -187,77 +189,14 @@ function addTask(e) {
 
       // Store Task in Local Storage
       storeTaskInLocalStorage(taskInput.value);
-    } else {
-      presentTasks = JSON.parse(localStorage.getItem("tasks"));
-      if (presentTasks.includes(taskInput.value)) {
-        alert("tasks already exists");
-      } else {
-        const li = document.createElement("li");
-
-        //add class
-        li.className = "collection-item";
-        //append task value to li
-        li.append(taskInput.value);
-        // creating task node and appending to li (another method to test)
-        // li.appendChild(document.createTextNode(taskInput.value))
-
-        // create a new link for the delete icon
-        const link = document.createElement("a");
-
-        //add class
-        link.className = "delete-item secondary-content";
-
-        //add icon html
-        link.innerHTML = '<i class="fa fa-remove"></i>';
-
-        // append to li
-        li.append(link);
-
-        // append li to ul
-
-        taskList.append(li);
-
-        // Store Task in Local Storage
-        storeTaskInLocalStorage(taskInput.value);
-      }
-      // console.log(presentTasks);
     }
   }
-  //   const li = document.createElement("li");
-
-  //   //add class
-  //   li.className = "collection-item";
-  //   //append task value to li
-  //   li.append(taskInput.value);
-  //   // creating task node and appending to li (another method to test)
-  //   // li.appendChild(document.createTextNode(taskInput.value))
-
-  //   // create a new link for the delete icon
-  //   const link = document.createElement("a");
-
-  //   //add class
-  //   link.className = "delete-item secondary-content";
-
-  //   //add icon html
-  //   link.innerHTML = '<i class="fa fa-remove"></i>';
-
-  //   // append to li
-  //   li.append(link);
-
-  //   // append li to ul
-
-  //   taskList.append(li);
-
-  //   // Store Task in Local Storage
-  //   storeTaskInLocalStorage(taskInput.value);
-  // }
 
   // clearing out taskInput
   taskInput.value = "";
+  //prevent default form action
   e.preventDefault();
 }
-
-//prvent default form action
 
 // Store Task
 function storeTaskInLocalStorage(task) {
