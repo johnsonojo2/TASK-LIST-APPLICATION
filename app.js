@@ -106,6 +106,7 @@ function loadEventListeners() {
   form.addEventListener("submit", addTask);
   //Remove tasks event
   taskList.addEventListener("click", removeTask);
+  taskList.addEventListener("click", updateTask);
 
   //Clear tasks event
   clearBtn.addEventListener("click", clearTask);
@@ -143,9 +144,19 @@ function getTasks() {
 
     //add icon html
     link.innerHTML = '<i class="fa fa-remove"></i>';
-
     // append to li
     li.append(link);
+
+    const edit = document.createElement("a");
+
+    //add class
+    edit.className = "update-item secondary-content";
+
+    //add icon html
+    edit.innerHTML = '<i class="fa fa-pencil" aria-hidden="true"></i>';
+
+    // append to li
+    li.append(edit);
 
     // append li to ul
     taskList.append(li);
@@ -154,88 +165,62 @@ function getTasks() {
 
 // Add task Function
 function addTask(e) {
-  let presentTasks;
-  if (taskInput.value === "") {
+  if (taskInput.value === "" || taskInput.value.trim().length === 0) {
     alert("add a task");
   } else {
     if (taskList.children === 0) {
-      const li = document.createElement("li");
-
-      //add class
-      li.className = "collection-item";
-
-      //append task value to li
-      li.append(taskInput.value);
-
-      // li.appendChild(document.createTextNode(taskInput.value))
-
-      // create a new link for the delete icon
-      const link = document.createElement("a");
-
-      //add class
-      link.className = "delete-item secondary-content";
-
-      //add icon html
-      link.innerHTML = '<i class="fa fa-remove"></i>';
-
-      // append to li
-      li.append(link);
-
-      // append li to ul
-
-      taskList.append(li);
-
-      // Store Task in Local Storage
-      storeTaskInLocalStorage(taskInput.value);
-    }
-    // presentTasks = JSON.parse(localStorage.getItem("tasks"));
-    // if (presentTasks.includes(taskInput.value)) {
-    //   alert("tasks already exists");
-    else {
+      creatLiAppendToUl();
+    } else {
       let presentTasks = JSON.parse(localStorage.getItem("tasks"));
-      if (presentTasks.includes(taskInput.value)) {
+      if (presentTasks.includes(taskInput.value.trim().toLowerCase())) {
         alert("tasks already exists");
       } else {
-        const li = document.createElement("li");
-
-        //add class
-        li.className = "collection-item";
-
-        //append task value to li
-        li.append(taskInput.value);
-
-        // li.appendChild(document.createTextNode(taskInput.value))
-
-        // create a new link for the delete icon
-        const link = document.createElement("a");
-
-        //add class
-        link.className = "delete-item secondary-content";
-
-        //add icon html
-        link.innerHTML = '<i class="fa fa-remove"></i>';
-
-        // append to li
-        li.append(link);
-
-        // append li to ul
-
-        taskList.append(li);
-
-        // Store Task in Local Storage
-        storeTaskInLocalStorage(taskInput.value);
+        creatLiAppendToUl();
       }
 
       // }
     }
-
-    // clearing out taskInput
-    taskInput.value = "";
-    //prevent default form action
-    e.preventDefault();
   }
+  // clearing out taskInput
+  taskInput.value = "";
+  //prevent default form action
+  e.preventDefault();
 }
+function creatLiAppendToUl() {
+  const li = document.createElement("li");
 
+  //add class
+  li.className = "collection-item";
+  let taskInputL = taskInput.value.trim().toLowerCase();
+  //append task value to li
+  li.append(taskInputL);
+
+  // li.appendChild(document.createTextNode(taskInput.value))
+
+  // create a new link for the delete icon
+  const link = document.createElement("a");
+
+  //add class
+  link.className = "delete-item secondary-content";
+
+  //add icon html
+  link.innerHTML = '<i class="fa fa-remove"></i>';
+
+  // append to li
+  li.append(link);
+
+  const edit = document.createElement("a");
+  edit.className = "update-item secondary-content";
+  edit.innerHTML = '<i class="fa fa-pencil" aria-hidden="true"></i>';
+  li.append(edit);
+  taskList.append(li);
+  // append li to ul
+
+  taskList.append(li);
+
+  // Store Task in Local Storage
+  storeTaskInLocalStorage(taskInputL);
+}
 // Store Task
 function storeTaskInLocalStorage(task) {
   let tasks;
@@ -251,13 +236,20 @@ function storeTaskInLocalStorage(task) {
 }
 //Remove Task Function
 function removeTask(e) {
-  if (e.target.classList.contains("fa")) {
+  if (e.target.classList.contains("fa-remove")) {
     if (confirm("are you sure?")) {
       e.target.parentElement.parentElement.remove();
 
       // remove from local Storage
     }
     removeFromLocalStorage(e.target.parentElement.parentElement);
+  }
+}
+
+function updateTask(e) {
+  if (e.target.classList.contains("fa-pencil")) {
+    //
+    console.log("clicked pencil");
   }
 }
 //Remove from LS
