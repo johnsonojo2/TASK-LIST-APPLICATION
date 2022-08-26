@@ -165,6 +165,7 @@ function getTasks() {
 
 // Add task Function
 function addTask(e) {
+  e.preventDefault();
   if (taskInput.value === "" || taskInput.value.trim().length === 0) {
     alert("add a task");
   } else {
