@@ -169,7 +169,7 @@ function addTask(e) {
   if (taskInput.value === "" || taskInput.value.trim().length === 0) {
     alert("add a task");
   } else {
-    if (taskList.children === 0) {
+    if (taskList.children.length === 0) {
       creatLiAppendToUl();
     } else {
       let presentTasks = JSON.parse(localStorage.getItem("tasks"));
