@@ -248,8 +248,45 @@ function removeTask(e) {
 
 function updateTask(e) {
   if (e.target.classList.contains("fa-pencil")) {
-    //
-    console.log("clicked pencil");
+    let updatedTask = prompt("kindly update your task item:");
+    let tasksInLs = JSON.parse(localStorage.getItem("tasks"));
+    let listItem = e.target.parentElement.parentElement;
+    if (updatedTask === "" || updatedTask.trim().length === 0) {
+      updatedTask = listItem.innerText;
+    } else if (tasksInLs.includes(updatedTask.trim().toLowerCase())) {
+      alert("Task already exists");
+      updatedTask = prompt("kindly update to a task item that does not exist:");
+    }
+    // let listItem = e.target.parentElement.parentElement;
+
+    let taskIndex = tasksInLs.indexOf(listItem.innerText);
+
+    tasksInLs[taskIndex] = updatedTask;
+
+    localStorage.setItem("tasks", JSON.stringify(tasksInLs));
+
+    listItem.innerText = "";
+    //add class
+
+    let taskInputU = updatedTask.trim().toLowerCase();
+    //append task value to li
+    listItem.append(taskInputU);
+
+    const link = document.createElement("a");
+
+    //add class
+    link.className = "delete-item secondary-content";
+
+    //add icon html
+    link.innerHTML = '<i class="fa fa-remove"></i>';
+
+    // append to li
+    listItem.append(link);
+
+    const edit = document.createElement("a");
+    edit.className = "update-item secondary-content";
+    edit.innerHTML = '<i class="fa fa-pencil" aria-hidden="true"></i>';
+    listItem.append(edit);
   }
 }
 //Remove from LS
