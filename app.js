@@ -252,15 +252,19 @@ function updateTask(e) {
     let updatedTask = prompt("kindly update your task item:");
     let tasksInLs = JSON.parse(localStorage.getItem("tasks"));
     let listItem = e.target.parentElement.parentElement;
+    let taskIndex = tasksInLs.indexOf(listItem.innerText);
     if (updatedTask === "" || updatedTask.trim().length === 0) {
       updatedTask = listItem.innerText;
     } else if (tasksInLs.includes(updatedTask.trim().toLowerCase())) {
       alert("Task already exists");
-      updatedTask = prompt("kindly update to a task item that does not exist:");
+      updatedTask = prompt(
+        "kindly update to a task item that does not exist:"
+      ).toLocaleLowerCase();
+      if (updatedTask === "" || updatedTask.trim().length === 0) {
+        updatedTask = listItem.innerText;
+      }
     }
     // let listItem = e.target.parentElement.parentElement;
-
-    let taskIndex = tasksInLs.indexOf(listItem.innerText);
 
     tasksInLs[taskIndex] = updatedTask;
 
