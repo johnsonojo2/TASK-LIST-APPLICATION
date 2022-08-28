@@ -254,7 +254,7 @@ function updateTask(e) {
     let listItem = e.target.parentElement.parentElement;
     let taskIndex = tasksInLs.indexOf(listItem.innerText);
     if (updatedTask === "" || updatedTask.trim().length === 0) {
-      updatedTask = listItem.innerText;
+      updatedTask = listItem.innerText; // MIGHT CHANGE THIS TO ASK FOR AN UPDATE COMPULSORLY \
     } else if (tasksInLs.includes(updatedTask.trim().toLowerCase())) {
       alert("Task already exists");
       updatedTask = prompt(
