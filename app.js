@@ -264,7 +264,6 @@ function updateTask(e) {
         updatedTask = listItem.innerText;
       }
     }
-    // let listItem = e.target.parentElement.parentElement;
 
     tasksInLs[taskIndex] = updatedTask;
 

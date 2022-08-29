@@ -1,7 +1,7 @@
 # TASK-LIST-APP
 
 #This is a practice project
-it is a sample CRUD JS application. when done with the app, the user should be able to add tasks, conifrm if tasks already exists, update added tasks, delete tasks, filter through the tasks as well as reset task lists<br/>
+it is a sample CRUD JS application. when done with the app, the user should be able to add tasks, update added tasks, delete tasks, filter through the tasks as well as reset task lists<br/>
 
 #I am also trying to add a functionality to make sure that tasks are not added twice.<br/>
 
